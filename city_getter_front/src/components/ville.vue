@@ -18,6 +18,8 @@
 </template>
 
 <script>
+const axios = require('axios');
+
 export default {
   name: 'ville',
   props: {
@@ -28,7 +30,16 @@ export default {
       city: '',
       cities: [
           { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"}
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
       ]
     }
   },
@@ -41,9 +52,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+
  .holder {
     background: #fff;
     width: 100%;
+    flex-wrap: wrap;
     display:flex;
   }
 
