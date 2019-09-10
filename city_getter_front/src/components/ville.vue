@@ -9,11 +9,11 @@
         <div class="square"><p>température</p></div>
       </div>
     <div class="holder">
-      <ul>
-        <li v-for="(data, index) in cities" :key='index'>{{data.city}}</li>
-      </ul>
-      <p>These are the cities that we propose.</p>
+      <div class="city" v-for="(data, index) in cities" :key='index' :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}">
+        <p>{{data.city}}</p>
+      </div>
     </div>
+          <p>These are the cities that we recommend.</p>
   </div>
 </template>
 
@@ -27,8 +27,8 @@ export default {
     return {
       city: '',
       cities: [
-          { "city": "Vue.js" },
-          { "city": "Frontend Developer" }
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
+          { "city": "bordeaux" ,"img":"bordeaux.jpg"}
       ]
     }
   },
@@ -43,7 +43,25 @@ export default {
 <style scoped>
  .holder {
     background: #fff;
-    width: 100%
+    width: 100%;
+    display:flex;
+  }
+
+  .city{
+    width: 200px;
+    height: 200px;
+    background: #fff;
+    margin: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border:2px solid red;
+    background-size: 100% 100%;
+  }
+
+  .city p{
+     color:#fff;
   }
 
   #parameters{
