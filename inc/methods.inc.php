@@ -36,15 +36,16 @@ function getByAttributes($pdo){
 	}
 
 	// definit la liste des champs
-	$champs = array('tmp', 'ville', 'nomCont', 'budget', 'activite', 'mois');
+	$champs = array('tb' => 'tmp', 'v' => 'ville', 'c' => 'nomCont', 'tb' => 'budget', 'a' => 'activite', 'tb' => 'mois');
 	$conditions = array();
 
 	// boucle à travers tout les champs définis
-	foreach($champs as $champs){
+	foreach($champs as $key => $champs){
 		// si le champ n'est pas vide
 		if(isset($_GET[$champs]) && $_GET[$champs] != '') {
+			$key = strval($key);
 			// crée une nouvelle condition
-			$conditions[] = "c.$champs LIKE '%{$_GET[$champs]}%'";
+			$conditions[] = "$key.$champs LIKE '%{$_GET[$champs]}%'";
 		}
 	}
 
