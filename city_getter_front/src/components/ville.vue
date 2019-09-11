@@ -7,7 +7,7 @@
             <div class="openModal" v-on:click='showDistance = !showDistance'></div>
             <p>distance</p>
             <div v-show="showDistance" class="modal">
-              <input type="text" placeholder="choisis ta distance" v-model="distance">
+              <input type="number" placeholder="choisis ta distance" v-model="distance">
             </div>
           </div>
           
@@ -86,14 +86,15 @@ export default {
       activiteFromDb:[],
       monthsFromDb:[],
       continent:"",
-      temperature:10,
+      temperature:"",
       distance:"",
+      budget:"",
       activites:[]
     }
   },
   methods:{
     getByAttributes: function (params) {      
-      axios.get("http://localhost:8000/api.php?search=true&tmp="+this.temperature+"&nomCont="+this.continent+"&budget="+this.temperature+"&activite="+this.temperature+"&mois=")
+      axios.get("http://localhost:8000/api.php?search=true&tmp="+this.temperature+"&nomCont="+this.continent+"&budget="+this.budget+"&activite="+this.budget+"&distance="+this.distance)
       .then(response => {
         console.log(response.data);
         this.citiesFromDb=response.data.cities

@@ -1,6 +1,5 @@
 <?php
 	
-	/* [USER FUNCTIONS] */
 	function getCities($pdo){
 		$query = $pdo->query("SELECT * FROM `ville`");
 		$res = $query->fetchAll();
@@ -24,36 +23,33 @@
 		return $res;
 	}
 
-
-
 function getByAttributes($pdo){
-
-
-	if (!isset($_GET['tmp']) && !isset($_GET['nomCont']) && !isset($_GET['budget']) && !isset($_GET['activite']) && !isset($_GET['mois'])){
-
-	echo "Aucun champs rempli";
-	return false;
+	if (!isset($_GET['tmp']) && !isset($_GET['nomCont']) && !isset($_GET['distance']) && !isset($_GET['budget']) && !isset($_GET['activite']) && !isset($_GET['mois'])){
+		echo "Aucun champs rempli";
+		return false;
 	}
 
-	// definit la liste des champs
-	$champs = array('tb' => 'tmp', 'v' => 'ville', 'c' => 'nomCont', 'tb' => 'budget', 'a' => 'activite', 'tb' => 'mois');
+	// set field list
+	$champs = array('tb' => 'tmp', 'v' => 'ville','v'=>'distance', 'c' => 'nomCont', 'tb' => 'budget', 'a' => 'activite', 'tb' => 'mois');
 	$conditions = array();
 
-	// boucle à travers tout les champs définis
-	foreach($champs as $key => $champs){
-		// si le champ n'est pas vide
-		if(isset($_GET[$champs]) && $_GET[$champs] != '') {
+	// loop through define field
+	foreach($champs as $key => $champ){
+		// if not nullable
+		if(isset($_GET[$champ]) && $_GET[$champ] != '') {
 			$key = strval($key);
-			// crée une nouvelle condition
-			$conditions[] = "$key.$champs LIKE '%{$_GET[$champs]}%'";
+			// add new condition
+			if ($champ=="distance") {
+				$conditions[] = "$key.$champ < $_GET[$champ]";
+			}
+			else{
+				$conditions[] = "$key.$champ LIKE '%{$_GET[$champ]}%'";
+			}
 		}
 	}
 
-
-    // construit la requête
-   
-	
-	$test="SELECT distinct nomVille,image
+    // build querie
+	$querie="SELECT distinct nomVille,image
 	FROM(Select idCont,idVille, nomVille,image,distance from ville)v
 	inner join
 	(Select idAct,idVille from actville)av
@@ -68,25 +64,25 @@ function getByAttributes($pdo){
 	(Select idCont,nomCont from continent)c
 	on v.idCont=c.idCont";
 
-    // si des conditions sont définies
+    // if at least on conditions is defined
     if(count($conditions) > 0) {
-        // ajoute les conditions à la suite
-		$test .= " WHERE " . implode (' AND ', $conditions);
+        // add where clause to the querie
+		$querie .= " WHERE " . implode (' AND ', $conditions);
 	}
-	$requete =  $pdo->query($test);
-	// var_dump($conditions);
-	// echo $test;
+	$performQuerie =  $pdo->query($querie);
+	//var_dump($conditions);
+	//echo $querie;
 
-    $resultat = $requete->fetchAll();
-	$nbResultats = $requete->rowCount($resultat);
+    $results = $performQuerie->fetchAll();
+	$nbResults = $performQuerie->rowCount($results);
 
 
-	if($nbResultats == 0){
+	if($nbResults == 0){
 		$nope= "Aucune correspondance";
 		return $nope;
 	}
 	else{
-		return $resultat;
+		return $results;
 	}
 		
 
