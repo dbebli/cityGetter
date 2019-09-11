@@ -10,7 +10,7 @@
       </div>
     <div class="holder">
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
-      <div class="city" v-for="(data, index) in cities" :key='index' >
+      <div class="city" v-for="(data, index) in cities" :key='index' :style="{ backgroundImage: `url(${require(`@/assets/${data.image}`)})`}">
         <p>{{data.nomVille}}</p>
       </div>
     </div>
