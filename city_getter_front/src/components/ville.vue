@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+    <div class="container" id="bgk-pattern">
+      <h1>CityGetter <span>for the better</span></h1>
       <div id="parameters">
         <div class="square"><p>distance</p></div>
         <div class="square"><p>budget</p></div>
@@ -41,7 +42,7 @@ export default {
       this.cities=response.data
     })
   }
-  
+
 }
 
 </script>
@@ -49,6 +50,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+#bgk-pattern{
+  height: 100vh;
+    width: 100%;
+    background-attachment: fixed;
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: repeat, no-repeat;
+    background-size: auto auto, cover;
+    background-image: url('../assets/pattern.png'), linear-gradient( rgba(200, 193, 193, 0.46), rgba(0, 0, 0, 0.32) ), url('../assets/background.jpg');
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 
  .holder {
     background: #fff;
@@ -100,7 +115,7 @@ export default {
     padding: 0;
     list-style-type: none;
   }
-  
+
   ul li {
     padding: 20px;
     font-size: 1.3em;
