@@ -9,8 +9,9 @@
         <div class="square"><p>température</p></div>
       </div>
     <div class="holder">
-      <div class="city" v-for="(data, index) in cities" :key='index' :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}">
-        <p>{{data.city}}</p>
+      <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
+      <div class="city" v-for="(data, index) in cities" :key='index' >
+        <p>{{data.nomVille}}</p>
       </div>
     </div>
           <p>These are the cities that we recommend.</p>
@@ -30,17 +31,6 @@ export default {
     return {
       city: '',
       cities: [
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
-          { "city": "bordeaux" ,"img":"bordeaux.jpg"},
       ]
     }
   },
@@ -48,8 +38,8 @@ export default {
     // axios to get cities
     axios.get('http://localhost:8000/api.php')
     .then(response => {
-      console.log(response);
-      
+      console.log(response.data.data);
+      this.cities=response.data.data
     })
   }
   
@@ -82,7 +72,7 @@ export default {
   }
 
   .city p{
-     color:#fff;
+     color:#000;
   }
 
   #parameters{
@@ -118,11 +108,6 @@ export default {
     color: #3E5252;
   }
 
-  p {
-    text-align:center;
-    padding: 30px 0;
-    color: gray;
-  }
 
   .container {
     box-shadow: 0px 0px 40px lightgray;
