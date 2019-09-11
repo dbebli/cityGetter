@@ -27,13 +27,13 @@
       </div>
       
       {{continent}}
-    <div class="holder">
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
-      <div class="city" v-for="(data, index) in citiesFromDb" :key='index' :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
-        <p>{{data.nomVille}}</p>
-      </div>
-    </div>
-          <p>These are the cities that we recommend.</p>
+      <transition-group name="list" tag="div" class="holder" enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+        <div class="city" v-for="(data, index) in citiesFromDb" :key='index' :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
+          <p>{{data.nomVille}}</p>
+        </div>
+      </transition-group>
+      <p>These are the cities that we recommend.</p>
   </div>
 </template>
 
@@ -59,7 +59,7 @@ export default {
       monthsFromDb:[],
       continent:"",
       temperature:"",
-      
+
 
     }
   },
