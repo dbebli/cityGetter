@@ -38,8 +38,13 @@ export default {
     // axios to get cities
     axios.get('http://localhost:8000/api.php')
     .then(response => {
+<<<<<<< HEAD
+      console.log(response.data.data);
+      this.cities=response.data.data
+=======
       console.log(response.data);
       this.cities=response.data
+>>>>>>> api
     })
   }
   

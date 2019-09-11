@@ -4,7 +4,14 @@ header("Content-Type:application/json");
 require "../inc/init.inc.php";
 require "../inc/methods.inc.php";
 $all = getAll($pdo);
+<<<<<<< HEAD
+  echo json_encode([
+    "status" => $all==false?false:true,
+    "data" => $all
+]);
+=======
   echo json_encode($all);
+>>>>>>> api
 if (isset($_GET['req'])) {
   // INIT
 
