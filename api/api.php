@@ -3,13 +3,15 @@ header("Access-Control-Allow-Origin:*");
 header("Content-Type:application/json");
 require "../inc/init.inc.php";
 require "../inc/methods.inc.php";
+
+//at the beginning get all cities
 $all = getAll($pdo);
   echo json_encode($all);
 if (isset($_GET['req'])) {
   // INIT
 
   // PROCESS REQUEST
-  switch ($_GET['req']) {
+  switch ($_GET['search']) {
     default:
       echo json_encode([
         "status" => false,
