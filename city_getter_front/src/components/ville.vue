@@ -1,16 +1,23 @@
 <template>
-    <div class="container">
+    <div class="container" id="bgk-pattern">
+      <h1>CityGetter <span>for the better</span></h1>
       <div id="parameters">
-        <div class="square"><p>température</p></div>
-        <div class="square"><p>température</p></div>
-        <div class="square"><p>température</p></div>
-        <div class="square"><p>température</p></div>
-        <div class="square"><p>température</p></div>
+        <div class="square" v-on:click='showDistance = !showDistance'><p>distance</p></div>
+        <div v-show="showDistance">
+          <input type="text" placeholder="choisis ta distance" v-model="distance">
+        </div>
+        <div class="square" v-on:click='showBudget = !showBudget'><p>budget</p></div>
+        <div v-show="showBudget">
+          <input type="text" placeholder="choisis ton budget">
+        </div>
+        <div class="square"><p>continent</p></div>
+        <div class="square"><p>activité</p></div>
         <div class="square"><p>température</p></div>
       </div>
+      {{distance}}
     <div class="holder">
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
-      <div class="city" v-for="(data, index) in cities" :key='index' >
+      <div class="city" v-for="(data, index) in cities" :key='index' :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
         <p>{{data.nomVille}}</p>
       </div>
     </div>
@@ -25,11 +32,14 @@ const axios = require('axios');
 export default {
   name: 'ville',
   props: {
-    msg: String
+    msg: String,
   },
   data() {
     return {
       city: '',
+      showDistance:false,
+      distance:"",
+       showBudget:false,
       cities: [
       ]
     }
@@ -42,7 +52,7 @@ export default {
       this.cities=response.data
     })
   }
-  
+
 }
 
 </script>
@@ -50,6 +60,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+#bgk-pattern{
+  height: 100vh;
+    width: 100%;
+    background-attachment: fixed;
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: repeat, no-repeat;
+    background-size: auto auto, cover;
+    background-image: url('../assets/pattern.png'), linear-gradient( rgba(200, 193, 193, 0.46), rgba(0, 0, 0, 0.32) ), url('../assets/background.jpg');
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 
  .holder {
     background: #fff;
@@ -67,12 +91,15 @@ export default {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border:2px solid red;
     background-size: 100% 100%;
+  
   }
 
   .city p{
-     color:#000;
+     color:#fff;
+     font-weight: 800;
+     text-transform: uppercase;
+     font-size: 20px;
   }
 
   #parameters{
@@ -83,8 +110,8 @@ export default {
     margin: 0 auto;
   }
   .square{
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     background: #fff;
     margin: 6px;
     display: flex;
@@ -98,7 +125,7 @@ export default {
     padding: 0;
     list-style-type: none;
   }
-  
+
   ul li {
     padding: 20px;
     font-size: 1.3em;
