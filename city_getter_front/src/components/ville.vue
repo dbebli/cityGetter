@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { log } from 'util';
 const axios = require('axios');
 
 export default {
@@ -45,7 +46,13 @@ export default {
   },
   mounted(){
     // axios to get cities
+    axios.get('http://localhost:8000/api.php')
+    .then(response => {
+      console.log(response);
+      
+    })
   }
+  
 }
 
 </script>

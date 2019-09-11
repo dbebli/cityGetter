@@ -12,10 +12,10 @@
 	);
 
 	define('TYPEBDD', 'mysql');//type de BDD
-	define('HOST', 'db725672477.db.1and1.com'); //domaine du serveur
-	define('USER', 'dbo725672477');//nom de l'utilisateur
-	define('PASSWORD', 'SiteGuiom2018!');
-	define('DBNAME', 'db725672477'); //nom de la bdd
+	define('HOST', 'localhost'); //domaine du serveur
+	define('USER', 'root');//nom de l'utilisateur
+	define('PASSWORD', '');
+	define('DBNAME', 'voyage'); //nom de la bdd
 
 	try{//on essaie de se connecetr à la base de données
 		$pdo = new PDO(TYPEBDD . ':host=' . HOST . ';dbname=' . DBNAME,USER,PASSWORD, $bddOptions);
@@ -26,7 +26,6 @@
 	}
 
 	//constantes :
-	define('URL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/');
 	define('RACINE', $_SERVER['DOCUMENT_ROOT'] . '/');
 
 	//variable d'affichage:
