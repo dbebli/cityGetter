@@ -1,13 +1,15 @@
 <?php
 header("Access-Control-Allow-Origin:*");
 header("Content-Type:application/json");
-  require "../inc/methods.inc.php";
-  echo "hello world";
-if (isset($_POST['req'])) {
+require "../inc/init.inc.php";
+require "../inc/methods.inc.php";
+$all = getAll($pdo);
+  echo json_encode($all);
+if (isset($_GET['req'])) {
   // INIT
 
   // PROCESS REQUEST
-  switch ($_POST['req']) {
+  switch ($_GET['req']) {
     default:
       echo json_encode([
         "status" => false,
