@@ -1,16 +1,15 @@
 <template>
     <div class="container">
       <div id="parameters">
-        <div class="square"><p>température</p></div>
-        <div class="square"><p>température</p></div>
-        <div class="square"><p>température</p></div>
-        <div class="square"><p>température</p></div>
-        <div class="square"><p>température</p></div>
+        <div class="square"><p>distance</p></div>
+        <div class="square"><p>budget</p></div>
+        <div class="square"><p>continent</p></div>
+        <div class="square"><p>activité</p></div>
         <div class="square"><p>température</p></div>
       </div>
     <div class="holder">
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
-      <div class="city" v-for="(data, index) in cities" :key='index' :style="{ backgroundImage: `url(${require(`@/assets/${data.image}`)})`}">
+      <div class="city" v-for="(data, index) in cities" :key='index' :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
         <p>{{data.nomVille}}</p>
       </div>
     </div>
@@ -67,12 +66,15 @@ export default {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border:2px solid red;
     background-size: 100% 100%;
+  
   }
 
   .city p{
-     color:#000;
+     color:#fff;
+     font-weight: 800;
+     text-transform: uppercase;
+     font-size: 20px;
   }
 
   #parameters{
@@ -83,8 +85,8 @@ export default {
     margin: 0 auto;
   }
   .square{
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     background: #fff;
     margin: 6px;
     display: flex;
