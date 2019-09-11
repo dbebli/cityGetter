@@ -2,12 +2,19 @@
     <div class="container" id="bgk-pattern">
       <h1>CityGetter <span>for the better</span></h1>
       <div id="parameters">
-        <div class="square"><p>distance</p></div>
-        <div class="square"><p>budget</p></div>
+        <div class="square" v-on:click='showDistance = !showDistance'><p>distance</p></div>
+        <div v-show="showDistance">
+          <input type="text" placeholder="choisis ta distance" v-model="distance">
+        </div>
+        <div class="square" v-on:click='showBudget = !showBudget'><p>budget</p></div>
+        <div v-show="showBudget">
+          <input type="text" placeholder="choisis ton budget">
+        </div>
         <div class="square"><p>continent</p></div>
         <div class="square"><p>activité</p></div>
         <div class="square"><p>température</p></div>
       </div>
+      {{distance}}
     <div class="holder">
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
       <div class="city" v-for="(data, index) in cities" :key='index' :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
@@ -25,11 +32,14 @@ const axios = require('axios');
 export default {
   name: 'ville',
   props: {
-    msg: String
+    msg: String,
   },
   data() {
     return {
       city: '',
+      showDistance:false,
+      distance:"",
+       showBudget:false,
       cities: [
       ]
     }
