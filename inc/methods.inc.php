@@ -1,46 +1,35 @@
 <?php
 	
 	/* [USER FUNCTIONS] */
-	function getAll($pdo){
+	function getCities($pdo){
 		$query = $pdo->query("SELECT * FROM `ville`");
 		$res = $query->fetchAll();
 		return $res;
 	}
-	function getByParamaters($pdo){
-		$query = $pdo->query("SELECT * 
-		FROM(select ville FROM `ville`)v
-		inner join
-		(select ville FROM `ville`)a
-		on a.idVille=v.idVille
-		
-		");
-		$res = $query->fetchAll();
-		return $res;
-	}
-	function getByParamaters2($pdo){
-		$query = $pdo->query("SELECT * FROM `ville`");
-		$res = $query->fetchAll();
-		return $res;
-	}
-	function getByParamaters3($pdo){
-		$query = $pdo->query("SELECT * FROM `ville`");
-		$res = $query->fetchAll();
-		return $res;
-	}
-	function getByParamaters4($pdo){
-		$query = $pdo->query("SELECT * FROM `ville`");
-		$res = $query->fetchAll();
-		return $res;
-	}
-
-
 	
+	function getContinent($pdo){
+		$query = $pdo->query("SELECT * FROM `continent`");
+		$res = $query->fetchAll();
+		return $res;
+	}
+
+	function getActivite($pdo){
+		$query = $pdo->query("SELECT * FROM `activite`");
+		$res = $query->fetchAll();
+		return $res;
+	}
+	function getMonths($pdo){
+		$query = $pdo->query("SELECT mois FROM `tempbudg`");
+		$res = $query->fetchAll();
+		return $res;
+	}
 
 
-function getByAttribut($pdo){
+
+function getByAttributes($pdo){
 
 
-if (empty($_GET['tmp']) && empty($_GET['ville']) && empty($_GET['continent']) && empty($_GET['budget']) && empty($_GET['activite']) && empty($_GET['mois'])){
+if (empty($_GET['tmp']) && empty($_GET['continent']) && empty($_GET['budget']) && empty($_GET['activite']) && empty($_GET['mois'])){
 
 echo "Aucun champs rempli";
 return false;
@@ -70,7 +59,7 @@ $conditions[] = "`$champs` LIKE '%" . $pdo->quote($pdo, $_GET[$champs]) . "%'";
     	(Select idActivite,nomAct from activite)a
     	on av.idActivite=a.idActivite
     	inner join
-    	(Select idVille,tempMin, tempMax,budgMin,budgMax from tempBudg)tb
+    	(Select idVille,tempMin, tempMax,budgMin,budgMax from tempbsudg)tb
     	on tb.idVille=v.idVille
     	inner join
     	(Select idCont,nomCont from continent)c
@@ -92,5 +81,5 @@ if($nbResultats == 0)
 
 return resultat;
 
-
+}
   ?>

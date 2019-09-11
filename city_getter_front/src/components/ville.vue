@@ -44,12 +44,21 @@ export default {
       ]
     }
   },
+  methods:{
+    getByAttributes: function (params) {
+      axios.get('http://localhost:8000/api.php')
+      .then(response => {
+        console.log(response.data.cities);
+        this.cities=response.data.cities
+      })
+    }
+  },
   mounted(){
     // axios to get cities
     axios.get('http://localhost:8000/api.php')
     .then(response => {
       console.log(response.data);
-      this.cities=response.data
+      this.cities=response.data.cities
     })
   }
 
