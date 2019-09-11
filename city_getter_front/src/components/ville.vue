@@ -1,23 +1,35 @@
 <template>
     <div class="container" id="bgk-pattern">
       <h1>CityGetter <span>for the better</span></h1>
-      <div id="parameters">
-        <div class="square" v-on:click='showDistance = !showDistance'><p>distance</p></div>
-        <div v-show="showDistance">
-          <input type="text" placeholder="choisis ta distance" v-model="distance">
+      <div id="userOptions">
+        <div id="parameters">
+          <div class="square" v-on:click='showDistance = !showDistance'><p>distance</p></div>
+          <div v-show="showDistance">
+            <input type="text" placeholder="choisis ta distance" v-model="distance">
+          </div>
+          <div class="square" v-on:click='showBudget = !showBudget'><p>budget</p></div>
+          <div v-show="showBudget">
+            <input type="text" placeholder="choisis ton budget">
+          </div>
+          <div class="square" v-on:click='showContinent = !showContinent'><p>continent</p></div>
+          <div v-show="showContinent">
+            <select name="" id="" v-model="continent">
+              <option value="">--Please choose an option--</option>
+              <option v-for="(data, index) in continentFromDb" >
+                {{data.nomCont}}
+              </option>
+            </select>
+          </div>
+          <div class="square"><p>activité</p></div>
+          <div class="square"><p>température</p></div>
         </div>
-        <div class="square" v-on:click='showBudget = !showBudget'><p>budget</p></div>
-        <div v-show="showBudget">
-          <input type="text" placeholder="choisis ton budget">
-        </div>
-        <div class="square"><p>continent</p></div>
-        <div class="square"><p>activité</p></div>
-        <div class="square"><p>température</p></div>
+        <button v-on:click=getByAttributes>ok</button>
       </div>
-      {{distance}}
+      
+      {{continent}}
     <div class="holder">
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
-      <div class="city" v-for="(data, index) in cities" :key='index' :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
+      <div class="city" v-for="(data, index) in citiesFromDb" :key='index' :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
         <p>{{data.nomVille}}</p>
       </div>
     </div>
@@ -38,27 +50,39 @@ export default {
     return {
       city: '',
       showDistance:false,
+      showContinent:false,
       distance:"",
-       showBudget:false,
-      cities: [
-      ]
+      showBudget:false,
+      continentFromDb:[],
+      citiesFromDb:[],
+      activiteFromDb:[],
+      monthsFromDb:[],
+      continent:"",
+      temperature:"",
+      
+
     }
   },
   methods:{
     getByAttributes: function (params) {
-      axios.get('http://localhost:8000/api.php')
+      console.log("nefzkn");
+      
+      axios.get("http://localhost:8000/api.php?search=true&tmp="+this.temperature+"&nomCont="+this.continent+"&budget="+this.temperature+"&activite="+this.temperature+"&mois=")
       .then(response => {
-        console.log(response.data.cities);
-        this.cities=response.data.cities
+        console.log(response.data);
+        this.citiesFromDb=response.data.cities
       })
     }
   },
   mounted(){
     // axios to get cities
-    axios.get('http://localhost:8000/api.php')
+    axios.get("http://localhost:8000/api.php")
     .then(response => {
       console.log(response.data);
-      this.cities=response.data.cities
+      this.citiesFromDb=response.data.cities
+      this.continentFromDb= response.data.continent
+      this.activiteFromDb=response.data.activite
+      this.monthsFromDb=response.data.months
     })
   }
 
@@ -147,6 +171,14 @@ export default {
 
   .container {
     box-shadow: 0px 0px 40px lightgray;
+  }
+
+  button{
+    margin: 10ox auto;
+    background: #3EB3F6;
+    display: inline-block;
+    padding: 8px 12px;
+    border: none;
   }
 
     input {
