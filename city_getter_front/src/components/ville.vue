@@ -3,30 +3,57 @@
       <h1>CityGetter <span>for the better</span></h1>
       <div id="userOptions">
         <div id="parameters">
-          <div class="square" v-on:click='showDistance = !showDistance'><p>distance</p></div>
-          <div v-show="showDistance">
-            <input type="text" placeholder="choisis ta distance" v-model="distance">
+          <div class="square">
+            <div class="openModal" v-on:click='showDistance = !showDistance'></div>
+            <p>distance</p>
+            <div v-show="showDistance" class="modal">
+              <input type="text" placeholder="choisis ta distance" v-model="distance">
+            </div>
           </div>
-          <div class="square" v-on:click='showBudget = !showBudget'><p>budget</p></div>
-          <div v-show="showBudget">
-            <input type="text" placeholder="choisis ton budget">
+          
+          <div class="square">
+            <div class="openModal" v-on:click='showBudget = !showBudget'></div>
+            <p>budget</p>
+            <div v-show="showBudget" class="modal">
+              <input type="text" placeholder="choisis ton budget">
+            </div>
           </div>
-          <div class="square" v-on:click='showContinent = !showContinent'><p>continent</p></div>
-          <div v-show="showContinent">
-            <select name="" id="" v-model="continent">
-              <option value="">--Please choose an option--</option>
-              <option v-for="(data, index) in continentFromDb" >
-                {{data.nomCont}}
-              </option>
-            </select>
+          
+          <div class="square" >
+            <div class="openModal" v-on:click='showContinent = !showContinent'></div>
+            <p>continent</p>
+            <div v-show="showContinent" class="modal" >
+              <select name="" id="" v-model="continent">
+                <option value="">--Please choose a continent--</option>
+                <option v-for="(data, index) in continentFromDb" >
+                  {{data.nomCont}}
+                </option>
+              </select>
+            </div>
           </div>
-          <div class="square"><p>activité</p></div>
-          <div class="square"><p>température</p></div>
+          
+          <div class="square" >
+            <div class="openModal" v-on:click='showActivite = !showActivite'></div>
+            <p>activité</p>
+            <div v-show="showActivite" class="modal">
+              <div v-for="(data, index) in activiteFromDb" class="activite">
+                <input type="checkbox" :id="data.nomAct" v-model="activites" :value="data.nomAct">
+                <label for="scales">{{data.nomAct}}</label>
+              </div>
+              
+            </div>
+          </div>
+          <div class="square">
+            <div class="openModal" v-on:click='showTemp = !showTemp'></div>
+            <p>température</p>
+            <div v-show="showTemp" class="modal">
+              <input type="range" v-model="temperature">
+            </div>
+          </div>
         </div>
         <button v-on:click=getByAttributes>ok</button>
       </div>
       
-      {{continent}}
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
       <transition-group name="list" tag="div" class="holder" enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
         <div class="city" v-for="(data, index) in citiesFromDb" :key='index' :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
@@ -51,22 +78,21 @@ export default {
       city: '',
       showDistance:false,
       showContinent:false,
-      distance:"",
       showBudget:false,
+      showActivite:false,
+      showTemp:false,
       continentFromDb:[],
       citiesFromDb:[],
       activiteFromDb:[],
       monthsFromDb:[],
       continent:"",
-      temperature:"",
-
-
+      temperature:10,
+      distance:"",
+      activites:[]
     }
   },
   methods:{
-    getByAttributes: function (params) {
-      console.log("nefzkn");
-      
+    getByAttributes: function (params) {      
       axios.get("http://localhost:8000/api.php?search=true&tmp="+this.temperature+"&nomCont="+this.continent+"&budget="+this.temperature+"&activite="+this.temperature+"&mois=")
       .then(response => {
         console.log(response.data);
@@ -134,7 +160,9 @@ export default {
      text-transform: uppercase;
      font-size: 20px;
   }
-
+.activite{
+  display: flex;
+}
   #parameters{
     display: flex;
     width:800px;
@@ -144,13 +172,29 @@ export default {
   }
   .square{
     width: 100px;
+    position: relative;
     height: 100px;
     background: #fff;
     margin: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .openModal{    
     cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .modal{
+    position: absolute;
+    background: #000;
+    padding: 12px;
+    z-index: 1;
+    color: #fff;
+    top:20px;
   }
 
   ul {
@@ -182,10 +226,9 @@ export default {
   }
 
     input {
-    width: calc(100% - 40px);
     border: 0;
-    padding: 20px;
-    font-size: 1.3em;
+    padding: 5px;
+    font-size: 12;
     background-color: #323333;
     color: #687F7F;
   }
