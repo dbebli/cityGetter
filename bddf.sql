@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  mer. 11 sep. 2019 à 09:24
+-- Généré le :  mer. 11 sep. 2019 à 09:28
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -277,16 +277,16 @@ CREATE TABLE IF NOT EXISTS `ville` (
 --
 
 INSERT INTO `ville` (`idVille`, `nomVille`, `idCont`, `image`, `distance`) VALUES
-(1, 'Nice', 3, '1.jpeg', 932),
-(2, 'Bordeaux', 3, '2.jpeg', 493),
-(3, 'Marrakech', 1, '3.jpeg', 2544),
-(4, 'Caire', 1, '4.jpeg', 5378),
-(5, 'Istanbul', 2, '5.jpeg', 2810),
-(6, 'St-Petersbourg', 3, '6.jpeg', 2765),
-(7, 'Bratislava', 3, '7.jpeg', 1328),
-(8, 'Caracas', 4, '8.jpeg', 7615),
-(9, 'Amsterdam', 3, '9.jpeg', 436),
-(10, 'NewYork', 4, '10.jpeg', 5834);
+(1, 'Nice', 3, '1.jpg', 932),
+(2, 'Bordeaux', 3, '2.jpg', 493),
+(3, 'Marrakech', 1, '3.jpg', 2544),
+(4, 'Caire', 1, '4.jpg', 5378),
+(5, 'Istanbul', 2, '5.jpg', 2810),
+(6, 'St-Petersbourg', 3, '6.jpg', 2765),
+(7, 'Bratislava', 3, '7.jpg', 1328),
+(8, 'Caracas', 4, '8.jpg', 7615),
+(9, 'Amsterdam', 3, '9.jpg', 436),
+(10, 'NewYork', 4, '10.jpg', 5834);
 
 --
 -- Contraintes pour les tables déchargées
