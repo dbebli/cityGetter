@@ -1,10 +1,11 @@
 <template>
     <div class="container" id="bgk-pattern">
-      <h1>CityGetter <span>for the better</span></h1>
+      <h1 id="title">CityGetter <span>for the better</span></h1>
       <div id="userOptions">
         <div id="parameters">
           <div class="square">
             <div class="openModal" v-on:click='showDistance = !showDistance'></div>
+            <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
             <p>distance</p>
             <div v-show="showDistance" class="modal">
               <input type="number" placeholder="choisis ta distance" v-model="distance">
@@ -13,6 +14,7 @@
           
           <div class="square">
             <div class="openModal" v-on:click='showBudget = !showBudget'></div>
+            <img class="imgResult" src="../assets/blanc/svg/sounds.svg" alt="plane">
             <p>budget</p>
             <div v-show="showBudget" class="modal">
               <input type="text" placeholder="choisis ton budget">
@@ -21,6 +23,7 @@
           
           <div class="square" >
             <div class="openModal" v-on:click='showContinent = !showContinent'></div>
+            <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
             <p>continent</p>
             <div v-show="showContinent" class="modal" >
               <select name="" id="" v-model="continent">
@@ -34,6 +37,7 @@
           
           <div class="square" >
             <div class="openModal" v-on:click='showActivite = !showActivite'></div>
+            <img class="imgResult" src="../assets/blanc/svg/bike.svg" alt="plane">
             <p>activité</p>
             <div v-show="showActivite" class="modal">
               <div v-for="(data, index) in activiteFromDb" class="activite">
@@ -45,6 +49,7 @@
           </div>
           <div class="square">
             <div class="openModal" v-on:click='showTemp = !showTemp'></div>
+            <img class="imgResult" src="../assets/blanc/svg/brightness.svg" alt="plane">
             <p>température</p>
             <div v-show="showTemp" class="modal">
               <input type="range" v-model="temperature">
@@ -56,8 +61,10 @@
       
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
       <transition-group name="list" tag="div" class="holder" enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
-        <div class="city" v-for="(data, index) in citiesFromDb" :key='index' :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
-          <p>{{data.nomVille}}</p>
+        <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
+          <div class="cityImg" :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
+            <p>{{data.nomVille}}</p>
+          </div>
         </div>
       </transition-group>
       <p>These are the cities that we recommend.</p>
@@ -134,6 +141,17 @@ export default {
     justify-content: center;
 }
 
+#title{
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+}
 
  .holder {
     background: #fff;
@@ -152,9 +170,24 @@ export default {
     justify-content: center;
     cursor: pointer;
     background-size: 100% 100%;
-  
+    overflow: hidden;
+    position: relative;
   }
 
+  .cityImg:hover{
+    transform: scale(1.3);
+  }
+
+  .cityImg{
+    transition: all .3s ease-in-out;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .city p{
      color:#fff;
      font-weight: 800;
@@ -172,15 +205,39 @@ export default {
     margin: 0 auto;
   }
   .square{
-    width: 100px;
     position: relative;
+    width: 100px;
     height: 100px;
-    background: #fff;
+    background: #337171;
     margin: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    border: 0 solid;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+  outline: 1px solid;
+  outline-color: rgba(255, 255, 255, .5);
+  outline-offset: 0px;
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+  flex-direction: column;
+  color:white;
+  padding: 20px;
   }
+  .square:hover {
+
+  border: 1px solid;
+
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
+
+  outline-color: rgba(255, 255, 255, 0);
+
+  outline-offset: 15px;
+
+  text-shadow: 1px 1px 2px #427388;
+
+}
 
   .openModal{    
     cursor: pointer;
