@@ -88,10 +88,10 @@
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
          <transition-group v-show="showResults" name="list" tag="div" class="holder" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
           <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
-            <div class="cityImg" :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50) ),url(${require(`@/assets/${data.image}`)})`}">
-              <p>{{data.nomVille}}</p>
-              <p style="font-size:15px">{{data.budgMin}}€</p>
-              <p style="font-size:12px">{{data.tempMin}}°C - {{data.tempMax}}°c</p>
+            <div class="cityImg" :style="{ backgroundImage: `url(${require(`@/assets/${data.image}`)})`}">
+              <p style="top:50px">{{data.nomVille}}</p>
+              <p style="font-size:15px;top:84px">{{data.budgMin}}€</p>
+              <p style="font-size:12px;top:110px">{{data.tempMin}}°C - {{data.tempMax}}°c</p>
             </div>
           </div>
         </transition-group>
@@ -270,13 +270,32 @@ transition: all 0.2s;
     height: 100%;
     background-size: 100% 100%;
 text-align: center;
-padding-top: 58px;
   }
-  .city p{
-     color:#fff;
-     font-weight: 800;
-     text-transform: uppercase;
-     font-size: 20px;
+  .cityImg:after {
+    content: '\A';
+    position: absolute;
+    width: 100%; height:100%;
+    top:0; left:0;
+    background:rgba(0,0,0,0.6);
+    opacity: 1;
+    transition: all .6s;
+    -webkit-transition: all .6s;
+    z-index: 0;
+}
+.cityImg:hover:after,.cityImg:hover p {
+  opacity: 0;
+}
+  .cityImg p{
+     color: #fff;
+    z-index: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 20px;
+    transition: all .6s;
+    -webkit-transition: all .6s;
   }
 .activite{
   display: flex;
