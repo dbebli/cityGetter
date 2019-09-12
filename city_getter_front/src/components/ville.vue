@@ -79,6 +79,8 @@
         <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
           <div class="cityImg" :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
             <p>{{data.nomVille}}</p>
+            <p style="font-size:15px">{{data.budgMin}}€</p>
+            <p style="font-size:12px">{{data.tempMin}}°C - {{data.tempMax}}°c</p>
           </div>
         </div>
       </transition-group>
@@ -150,7 +152,6 @@ export default {
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
 #bgk-pattern{
-  height: 100vh;
     width: 100%;
     background-attachment: fixed;
     background-color: transparent;
@@ -205,10 +206,9 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
+    padding-top: 58px;
     background-size: 100% 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   text-align: center;
   }
   .city p{
      color:#fff;

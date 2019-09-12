@@ -4,12 +4,19 @@
 class Ville
 {
 	private $pdo="";
+
 	function __construct(\PDO $pdo){
 		$pdo = $pdo;
 	}
 
+	
 	public function getCities($pdo){
-		$query = $pdo->query("SELECT * FROM `ville`");
+		$query = $pdo->query("SELECT distinct nomVille,image,tempMin,budgMin,tempMax
+		FROM (select idVille, nomVille,image from `ville`)v
+		inner join
+		(select  idVille,tempMin,tempMax,budgMin,mois from `tempbudg`)tb
+		on v.idVille=tb.idVille
+        where mois='octobre'");
 		$res = $query->fetchAll();
 		return $res;
 	}
@@ -58,8 +65,10 @@ class Ville
 						$conditions[] = "$key.budgMin < $_GET[$subfield]";
 					}
 					elseif ($subfield=="nomAct") {
-						var_dump($_GET['nomAct']);
-						var_dump("rest");
+						$tabActivite = explode(",", $_GET[$subfield]);
+						foreach($tabActivite as $activite){
+							$conditions[] = "$key.$subfield LIKE '%{$activite}%'";
+						}
 					}
 					else{
 						$conditions[] = "$key.$subfield LIKE '%{$_GET[$subfield]}%'";
