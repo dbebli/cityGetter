@@ -79,7 +79,11 @@
           </transition>
           </div>
         </div>
-        <button v-on:click=getByAttributes id="validateBtn">ok</button>
+        <div class="buttons">
+          <button v-on:click=getByAttributes class="btn">ok</button>
+        <button v-on:click=reset class="btn">reset</button>
+        </div>
+        
       </div>
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
          <transition-group v-show="showResults" name="list" tag="div" class="holder" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
@@ -131,7 +135,7 @@ export default {
     }
   },
   methods:{
-    getByAttributes: function (params) {
+    getByAttributes: function () {
       this.citiesFromDb=[]
       axios.get("http://localhost:8000/api.php?search=true&temperature="+this.temperature+"&nomCont="+this.continent+"&budget="+this.budget+"&nomAct="+this.activites+"&distance="+this.distance+"&mois="+this.month)
       .then(response => {        
@@ -146,6 +150,14 @@ export default {
     },
     updateTextInput: function (e) {
       this.temperature= e.target.value;
+    },
+    reset: function (e) {
+      this.temperature= "";
+      this.distance="";
+      this.activites=[];
+      this.budget=""
+      this.continent;
+      this.getByAttributes();
     }
   },
   mounted(){
@@ -201,13 +213,21 @@ body, body div#app{
   flex-direction: column;
   justify-content: center;
 }
-#validateBtn{
+.buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+
+}
+.btn{
 width: 100px;
 height: 30px;
 background-color: #c8802a;
 border-radius: 15px;
 align-self: center;
-margin: 30px 0;
+margin: 0px 10px;
+
 font-weight: bold;
 color: white;
 transition: all 0.2s;
