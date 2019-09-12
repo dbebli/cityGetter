@@ -6,10 +6,11 @@
           <div class="square">
             <div class="openModal" v-on:click='showDistance = !showDistance'></div>
             <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
-            <p>distance</p>
+            <p class="param">distance</p>
+            <p v-show="distance!=''">{{distance}}km</p>
             <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showDistance" class="modal">
-              <input type="number" placeholder="choisis ta distance" v-model="distance">
+              <input type="number" placeholder="distance" v-model="distance">
             </div>
           </transition>
           </div>
@@ -17,9 +18,11 @@
           <div class="square">
             <div class="openModal" v-on:click='showBudget = !showBudget'></div>
             <img class="imgResult" src="../assets/blanc/svg/sounds.svg" alt="plane">
-            <p>budget</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+            <p class="param">budget</p>
+            <p v-show="budget!=''">{{budget}}€</p>
+            <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showBudget" class="modal">
-              <input type="text" placeholder="choisis ton budget maximum" v-model="budget">
+              <input type="text" placeholder="budget maximum" v-model="budget">
             </div>
           </transition>
           </div>
@@ -27,7 +30,8 @@
           <div class="square" >
             <div class="openModal" v-on:click='showContinent = !showContinent'></div>
             <img class="imgResult customImg" src="../assets/world.svg" alt="world">
-            <p>continent</p>
+            <p class="param">continent</p>
+            <p v-show="continent!=''">{{continent}}</p>
             <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showContinent" class="modal" >
               <select name="" id="" v-model="continent">
@@ -43,7 +47,9 @@
           <div class="square" >
             <div class="openModal" v-on:click='showMonths = !showMonths'></div>
             <img class="imgResult customImg" src="../assets/calendar.svg" alt="calendar">
-            <p>mois</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+            <p class="param">mois</p>
+            <p v-show="month!=''">{{month}}</p>
+            <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showMonths" class="modal" >
               <select name="" id="" v-model="month">
                 <option value="">--Please choose a continent--</option>
@@ -58,7 +64,8 @@
           <div class="square" >
             <div class="openModal" v-on:click='showActivite = !showActivite'></div>
             <img class="imgResult" src="../assets/blanc/svg/bike.svg" alt="plane">
-            <p>activité</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+            <p class="param">activité</p>
+            <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showActivite" class="modal">
               <div v-for="(data, index) in activiteFromDb" class="activite">
                 <input type="checkbox" :id="data.nomAct" v-model="activites" :value="data.nomAct">
@@ -71,9 +78,11 @@
           <div class="square">
             <div class="openModal" v-on:click='showTemp = !showTemp'></div>
             <img class="imgResult" src="../assets/blanc/svg/brightness.svg" alt="plane">
-            <p>température</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+            <p class="param">température</p>
+            <p v-show="temperature!=''">{{ temperature }} °C</p>
+            <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showTemp" class="modal">
-              <p>{{ temperature }} °</p>
+              <p>{{ temperature }} °C</p>
               <input type="range" v-model="temperature" min="0" max="50" step="1" @change="updateTextInput">
             </div>
           </transition>
@@ -85,7 +94,6 @@
         </div>
         
       </div>
-      {{activites}}
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
          <transition-group v-show="showResults" name="list" tag="div" class="holder" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
           <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
@@ -179,6 +187,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+p{
+  margin: 0;
+}
 .customImg{
   width: 25px;
 }
@@ -226,6 +237,7 @@ width: 100px;
 height: 30px;
 background-color: #c8802a;
 border-radius: 15px;
+cursor: pointer;
 align-self: center;
 margin: 0px 10px;
 
@@ -270,7 +282,7 @@ transition: all 0.2s;
     width: 100%;
     height: 100%;
     background-size: 100% 100%;
-text-align: center;
+    text-align: center;
   }
   .cityImg:after {
     content: '\A';
@@ -308,6 +320,12 @@ text-align: center;
     justify-content: center;
     flex-wrap: wrap;
     margin: 0 auto;
+  }
+  .param{
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 14px;
+    margin: 5px 8px;
   }
   .square{
     position: relative;
@@ -389,6 +407,10 @@ text-align: center;
     display: inline-block;
     padding: 8px 12px;
     border: none;
+  }
+
+  input:focus{
+    outline: none;
   }
 
     input {

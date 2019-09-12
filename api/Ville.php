@@ -68,9 +68,9 @@ class Ville
 					elseif ($subfield=="nomAct") {
 						$i=0;
 						$tabActivite = explode(",", $_GET[$subfield]);
+						//add join for each activities
 						foreach($tabActivite as $activite){
-							$i++;
-							
+							$i++;		
 							if($i>1){
 								$eval= $i-1;
 								$joinActivities[] = "(SELECT idVille,av.IdAct 
