@@ -26,32 +26,36 @@ class Ville
 		return $res;
 	}
 	public function getMonths($pdo){
-		$query = $pdo->query("SELECT mois FROM `tempbudg`");
+		$query = $pdo->query("SELECT distinct mois FROM `tempbudg`");
 		$res = $query->fetchAll();
 		return $res;
 	}
 
 	public function getByAttributes($pdo){
-		if (!isset($_GET['tmp']) && !isset($_GET['nomCont']) && !isset($_GET['distance']) && !isset($_GET['budget']) && !isset($_GET['activite']) && !isset($_GET['mois'])){
+		if (!isset($_GET['temperature']) && !isset($_GET['nomCont']) && !isset($_GET['distance']) && !isset($_GET['budget']) && !isset($_GET['activite']) && !isset($_GET['mois'])){
 			echo "Aucun champs rempli";
 			return false;
 		}
 
 		// set field list
-		$champs = array('tb' => 'tmp', 'v' => 'ville','v'=>'distance', 'c' => 'nomCont', 'tb' => 'budget', 'a' => 'activite', 'tb' => 'mois');
+		$fields = array('tb' => array('temperature','budget','mois'), 'v' => array('ville','distance'), 'c' => array('nomCont'), 'a' => array('activite'));
 		$conditions = array();
-
 		// loop through define field
-		foreach($champs as $key => $champ){
+		foreach($fields as $key => $field){
 			// if not nullable
-			if(isset($_GET[$champ]) && $_GET[$champ] != '') {
-				$key = strval($key);
-				// add new condition
-				if ($champ=="distance") {
-					$conditions[] = "$key.$champ < $_GET[$champ]";
-				}
-				else{
-					$conditions[] = "$key.$champ LIKE '%{$_GET[$champ]}%'";
+			foreach($field as $subfield){
+				if(isset($_GET[$subfield]) && $_GET[$subfield] != '') {
+					$key = strval($key);
+					// add new condition
+					if ($subfield=="distance") {
+						$conditions[] = "$key.$subfield < $_GET[$subfield]";
+					}
+					elseif ($subfield=="temperature") {
+						$conditions[] = "$key.tempMin < $_GET[$subfield] AND $key.tempMax > $_GET[$subfield]";
+					}
+					else{
+						$conditions[] = "$key.$subfield LIKE '%{$_GET[$subfield]}%'";
+					}
 				}
 			}
 		}
@@ -65,7 +69,7 @@ class Ville
 
 
 		// build querie
-		$querie="SELECT distinct nomVille,image
+		$querie="SELECT distinct nomVille,image,tempMin,tempMax
 		FROM(Select idCont,idVille, nomVille,image,distance from ville)v
 		inner join
 		(Select idAct,idVille from actville)av
@@ -74,7 +78,7 @@ class Ville
 		(Select idAct,nomAct from activite)a
 		on av.idAct=a.idAct
 		inner join
-		(Select idVille,tempMin, tempMax,budgMin,budgMax from tempbudg)tb
+		(Select idVille,tempMin,mois, tempMax,budgMin,budgMax from tempbudg)tb
 		on tb.idVille=v.idVille
 		inner join
 		(Select idCont,nomCont from continent)c

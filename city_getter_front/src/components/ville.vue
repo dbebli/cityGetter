@@ -34,6 +34,20 @@
               </select>
             </div>
           </div>
+
+          <div class="square" >
+            <div class="openModal" v-on:click='showMonths = !showMonths'></div>
+            <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
+            <p>mois</p>
+            <div v-show="showMonths" class="modal" >
+              <select name="" id="" v-model="month">
+                <option value="">--Please choose a continent--</option>
+                <option v-for="(data, index) in monthsFromDb" >
+                  {{data.mois}}
+                </option>
+              </select>
+            </div>
+          </div>
           
           <div class="square" >
             <div class="openModal" v-on:click='showActivite = !showActivite'></div>
@@ -52,7 +66,8 @@
             <img class="imgResult" src="../assets/blanc/svg/brightness.svg" alt="plane">
             <p>température</p>
             <div v-show="showTemp" class="modal">
-              <input type="range" v-model="temperature">
+              <input type="range" v-model="temperature" min="0" max="50" step="1" @change="updateTextInput">
+              <input type="text" id="textInput" value="">
             </div>
           </div>
         </div>
@@ -72,6 +87,7 @@
 </template>
 
 <script>
+
 import { log } from 'util';
 const axios = require('axios');
 
@@ -84,6 +100,7 @@ export default {
     return {
       city: '',
       showDistance:false,
+      showMonths:false,
       showContinent:false,
       showBudget:false,
       showActivite:false,
@@ -95,17 +112,22 @@ export default {
       continent:"",
       temperature:"",
       distance:"",
+      month:"Septembre",
       budget:"",
       activites:[]
     }
   },
   methods:{
     getByAttributes: function (params) {      
-      axios.get("http://localhost:8000/api.php?search=true&tmp="+this.temperature+"&nomCont="+this.continent+"&budget="+this.budget+"&activite="+this.budget+"&distance="+this.distance)
+      axios.get("http://localhost:8000/api.php?search=true&temperature="+this.temperature+"&nomCont="+this.continent+"&budget="+this.budget+"&activite="+this.budget+"&distance="+this.distance+"&mois="+this.month)
       .then(response => {
         console.log(response.data);
         this.citiesFromDb=response.data.cities
       })
+    },
+    updateTextInput: function (e) {
+      document.getElementById('textInput').value=e.target.value; 
+      this.temperature= e.target.value;
     }
   },
   mounted(){
@@ -252,7 +274,7 @@ export default {
     padding: 12px;
     z-index: 1;
     color: #fff;
-    top:20px;
+    top:100px;
   }
 
   ul {
