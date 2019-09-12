@@ -1,5 +1,5 @@
 <template>
-    <div class="container" id="bgk-pattern">
+    <div class="container" >
       <h1 id="title">CityGetter <span>for the better</span></h1>
       <div id="userOptions">
         <div id="parameters">
@@ -75,7 +75,6 @@
             <div v-show="showTemp" class="modal">
               <p>{{ temperature }} °</p>
               <input type="range" v-model="temperature" min="0" max="50" step="1" @change="updateTextInput">
-              <input type="text" id="textInput" value="">
             </div>
           </transition>
           </div>
@@ -137,7 +136,6 @@ export default {
       })
     },
     updateTextInput: function (e) {
-      document.getElementById('textInput').value=e.target.value;
       this.temperature= e.target.value;
     }
   },
@@ -192,19 +190,7 @@ transition: all 0.2s;
 #validateBtn:hover{
   background-color: #e3bb8a;
 }
-#bgk-pattern{
-height:100%;
-    width: 100%;
-    background-attachment: fixed;
-    background-color: transparent;
-    background-position: center center;
-    background-repeat: repeat, no-repeat;
-    background-size: auto auto, cover;
-    background-image: url('../assets/pattern.png'), linear-gradient( rgba(200, 193, 193, 0.46), rgba(0, 0, 0, 0.32) ), url('../assets/background.jpg');
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+
 
 #title{
 

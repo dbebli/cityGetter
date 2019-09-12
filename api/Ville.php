@@ -86,7 +86,7 @@ class Ville
 
 
 		// build querie
-		$querie="SELECT distinct nomVille,image,tempMin,tempMax
+		$querie="SELECT distinct nomVille,image,tempMin,budgMin,tempMax
 		FROM(Select idCont,idVille, nomVille,image,distance from ville)v
 		inner join
 		(Select idAct,idVille from actville)av
