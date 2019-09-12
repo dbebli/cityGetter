@@ -156,7 +156,7 @@ export default {
       this.distance="";
       this.activites=[];
       this.budget=""
-      this.continent;
+      this.continent="";
       this.getByAttributes();
     }
   },
@@ -260,7 +260,7 @@ transition: all 0.2s;
   }
 
   .cityImg:hover{
-    transform: scale(1.3);
+    transform: scale(1.1);
   }
 
   .cityImg{
