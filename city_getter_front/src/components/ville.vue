@@ -85,6 +85,7 @@
         </div>
         
       </div>
+      {{activites}}
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
          <transition-group v-show="showResults" name="list" tag="div" class="holder" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
           <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
