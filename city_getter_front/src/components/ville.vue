@@ -82,9 +82,9 @@
         <button v-on:click=getByAttributes id="validateBtn">ok</button>
       </div>
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
-         <transition-group v-show="showResults" name="list" tag="div" class="holder" enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+         <transition-group v-show="showResults" name="list" tag="div" class="holder" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
           <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
-            <div class="cityImg" :style="{ backgroundImage: `url(${require(`@/assets/${data.image}`)})`}">
+            <div class="cityImg" :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50) ),url(${require(`@/assets/${data.image}`)})`}">
               <p>{{data.nomVille}}</p>
               <p style="font-size:15px">{{data.budgMin}}€</p>
               <p style="font-size:12px">{{data.tempMin}}°C - {{data.tempMax}}°c</p>
