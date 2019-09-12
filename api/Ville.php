@@ -115,7 +115,7 @@ class Ville
 
 
 		if($nbResults == 0){
-			$nope= "Aucune correspondance";
+			$nope= "";
 			return $nope;
 		}
 		else{

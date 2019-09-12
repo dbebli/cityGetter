@@ -81,17 +81,19 @@
         </div>
         <button v-on:click=getByAttributes id="validateBtn">ok</button>
       </div>
-
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
-      <transition-group name="list" tag="div" class="holder" enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
-        <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
-          <div class="cityImg" :style="{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30) ),url(${require(`@/assets/${data.image}`)})`}">
-            <p>{{data.nomVille}}</p>
-            <p style="font-size:15px">{{data.budgMin}}€</p>
-            <p style="font-size:12px">{{data.tempMin}}°C - {{data.tempMax}}°c</p>
+         <transition-group v-show="showResults" name="list" tag="div" class="holder" enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+          <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
+            <div class="cityImg" :style="{ backgroundImage: `url(${require(`@/assets/${data.image}`)})`}">
+              <p>{{data.nomVille}}</p>
+              <p style="font-size:15px">{{data.budgMin}}€</p>
+              <p style="font-size:12px">{{data.tempMin}}°C - {{data.tempMax}}°c</p>
+            </div>
           </div>
-        </div>
-      </transition-group>
+        </transition-group>
+        <p v-show="!showResults" class="noRes">aucun resultat</p>
+
+     
       <p>These are the cities that we recommend.</p>
   </div>
 </template>
@@ -109,6 +111,7 @@ export default {
   data() {
     return {
       city: '',
+      showResults:true,
       showDistance:false,
       showMonths:false,
       showContinent:false,
@@ -129,10 +132,16 @@ export default {
   },
   methods:{
     getByAttributes: function (params) {
+      this.citiesFromDb=[]
       axios.get("http://localhost:8000/api.php?search=true&temperature="+this.temperature+"&nomCont="+this.continent+"&budget="+this.budget+"&nomAct="+this.activites+"&distance="+this.distance+"&mois="+this.month)
-      .then(response => {
-        console.log(response.data);
-        this.citiesFromDb=response.data.cities
+      .then(response => {        
+        if(response.data.cities.length==0){
+          this.showResults=false
+        }
+        else{
+          this.citiesFromDb=response.data.cities;
+          this.showResults=true
+        }
       })
     },
     updateTextInput: function (e) {
@@ -143,7 +152,6 @@ export default {
     // axios to get cities
     axios.get("http://localhost:8000/api.php")
     .then(response => {
-      console.log(response.data);
       this.citiesFromDb=response.data.cities
       this.continentFromDb= response.data.continent
       this.activiteFromDb=response.data.activite
@@ -170,6 +178,12 @@ body, body div#app{
   text-align: center;
   background-color: transparent;
 
+}
+.noRes{
+  color: #fff;
+  text-align: center;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 #userOptions{
   display: flex;
