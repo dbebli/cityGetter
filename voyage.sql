@@ -1,25 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3308
--- Généré le :  mer. 11 sep. 2019 à 09:28
+-- Hôte : localhost:8889
+-- Généré le :  jeu. 12 sep. 2019 à 12:35
 -- Version du serveur :  5.7.26
--- Version de PHP :  7.2.18
+-- Version de PHP :  7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
--- Base de données :  `bddf`
+-- Base de données :  `voyage`
 --
 
 -- --------------------------------------------------------
@@ -28,12 +20,10 @@ SET time_zone = "+00:00";
 -- Structure de la table `activite`
 --
 
-DROP TABLE IF EXISTS `activite`;
-CREATE TABLE IF NOT EXISTS `activite` (
-  `idAct` int(3) NOT NULL AUTO_INCREMENT,
-  `nomAct` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`idAct`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `activite` (
+  `idAct` int(3) NOT NULL,
+  `nomAct` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `activite`
@@ -52,12 +42,9 @@ INSERT INTO `activite` (`idAct`, `nomAct`) VALUES
 -- Structure de la table `actville`
 --
 
-DROP TABLE IF EXISTS `actville`;
-CREATE TABLE IF NOT EXISTS `actville` (
+CREATE TABLE `actville` (
   `idVille` int(3) NOT NULL,
-  `idAct` int(3) NOT NULL,
-  PRIMARY KEY (`idVille`,`idAct`),
-  KEY `idAct` (`idAct`)
+  `idAct` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -67,14 +54,16 @@ CREATE TABLE IF NOT EXISTS `actville` (
 INSERT INTO `actville` (`idVille`, `idAct`) VALUES
 (7, 1),
 (10, 1),
-(1, 2),
+(11, 1),
 (2, 2),
 (3, 2),
 (4, 2),
 (5, 2),
 (6, 2),
+(7, 2),
 (9, 2),
 (10, 2),
+(11, 2),
 (3, 3),
 (7, 3),
 (8, 3),
@@ -93,12 +82,10 @@ INSERT INTO `actville` (`idVille`, `idAct`) VALUES
 -- Structure de la table `continent`
 --
 
-DROP TABLE IF EXISTS `continent`;
-CREATE TABLE IF NOT EXISTS `continent` (
-  `idCont` int(3) NOT NULL AUTO_INCREMENT,
-  `nomCont` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`idCont`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `continent` (
+  `idCont` int(3) NOT NULL,
+  `nomCont` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `continent`
@@ -109,8 +96,7 @@ INSERT INTO `continent` (`idCont`, `nomCont`) VALUES
 (2, 'Asie'),
 (3, 'Europe'),
 (4, 'Amerique'),
-(5, 'Oceanie'),
-(6, 'Antarctique');
+(5, 'Oceanie');
 
 -- --------------------------------------------------------
 
@@ -118,15 +104,13 @@ INSERT INTO `continent` (`idCont`, `nomCont`) VALUES
 -- Structure de la table `tempbudg`
 --
 
-DROP TABLE IF EXISTS `tempbudg`;
-CREATE TABLE IF NOT EXISTS `tempbudg` (
+CREATE TABLE `tempbudg` (
   `idVille` int(3) NOT NULL,
   `mois` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tempMin` int(3) NOT NULL,
   `tempMax` int(3) NOT NULL,
   `budgMin` int(6) NOT NULL,
-  `budgMax` int(6) NOT NULL,
-  PRIMARY KEY (`idVille`,`mois`)
+  `budgMax` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -253,7 +237,19 @@ INSERT INTO `tempbudg` (`idVille`, `mois`, `tempMin`, `tempMax`, `budgMin`, `bud
 (10, 'Mars', 2, 10, 1250, 1900),
 (10, 'Novembre', 5, 12, 1450, 1950),
 (10, 'Octobre', 10, 18, 1400, 1750),
-(10, 'Septembre', 16, 24, 1450, 1850);
+(10, 'Septembre', 16, 24, 1450, 1850),
+(11, 'Aout', 8, 16, 3400, 4000),
+(11, 'Avril', 12, 21, 3200, 3500),
+(11, 'Decembre', 14, 24, 2000, 3200),
+(11, 'Fevrier', 16, 27, 1900, 3000),
+(11, 'Janvier', 16, 26, 2000, 3150),
+(11, 'Juillet', 7, 14, 2690, 3860),
+(11, 'Juin', 8, 15, 2240, 3610),
+(11, 'Mai', 10, 17, 2010, 3640),
+(11, 'Mars', 15, 24, 1970, 3180),
+(11, 'Novembre', 12, 22, 2470, 3470),
+(11, 'Octobre', 11, 20, 2670, 3420),
+(11, 'Septembre', 9, 18, 2530, 3020);
 
 -- --------------------------------------------------------
 
@@ -261,16 +257,13 @@ INSERT INTO `tempbudg` (`idVille`, `mois`, `tempMin`, `tempMax`, `budgMin`, `bud
 -- Structure de la table `ville`
 --
 
-DROP TABLE IF EXISTS `ville`;
-CREATE TABLE IF NOT EXISTS `ville` (
-  `idVille` int(3) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `ville` (
+  `idVille` int(3) NOT NULL,
   `nomVille` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `idCont` int(2) NOT NULL,
   `image` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `distance` int(6) NOT NULL,
-  PRIMARY KEY (`idVille`),
-  KEY `idCont` (`idCont`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `distance` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `ville`
@@ -286,7 +279,66 @@ INSERT INTO `ville` (`idVille`, `nomVille`, `idCont`, `image`, `distance`) VALUE
 (7, 'Bratislava', 3, '7.jpg', 1328),
 (8, 'Caracas', 4, '8.jpg', 7615),
 (9, 'Amsterdam', 3, '9.jpg', 436),
-(10, 'NewYork', 4, '10.jpg', 5834);
+(10, 'NewYork', 4, '10.jpg', 5834),
+(11, 'Melbourne', 5, '11.jpg', 16782);
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `activite`
+--
+ALTER TABLE `activite`
+  ADD PRIMARY KEY (`idAct`);
+
+--
+-- Index pour la table `actville`
+--
+ALTER TABLE `actville`
+  ADD PRIMARY KEY (`idVille`,`idAct`),
+  ADD KEY `idAct` (`idAct`);
+
+--
+-- Index pour la table `continent`
+--
+ALTER TABLE `continent`
+  ADD PRIMARY KEY (`idCont`);
+
+--
+-- Index pour la table `tempbudg`
+--
+ALTER TABLE `tempbudg`
+  ADD PRIMARY KEY (`idVille`,`mois`);
+
+--
+-- Index pour la table `ville`
+--
+ALTER TABLE `ville`
+  ADD PRIMARY KEY (`idVille`),
+  ADD KEY `idCont` (`idCont`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `activite`
+--
+ALTER TABLE `activite`
+  MODIFY `idAct` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT pour la table `continent`
+--
+ALTER TABLE `continent`
+  MODIFY `idCont` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT pour la table `ville`
+--
+ALTER TABLE `ville`
+  MODIFY `idVille` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Contraintes pour les tables déchargées
@@ -310,8 +362,3 @@ ALTER TABLE `tempbudg`
 --
 ALTER TABLE `ville`
   ADD CONSTRAINT `ville_ibfk_1` FOREIGN KEY (`idCont`) REFERENCES `continent` (`idCont`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
