@@ -17,7 +17,7 @@
             <img class="imgResult" src="../assets/blanc/svg/sounds.svg" alt="plane">
             <p>budget</p>
             <div v-show="showBudget" class="modal">
-              <input type="text" placeholder="choisis ton budget maximum">
+              <input type="text" placeholder="choisis ton budget maximum" v-model="budget">
             </div>
           </div>
           
@@ -119,7 +119,7 @@ export default {
   },
   methods:{
     getByAttributes: function (params) {      
-      axios.get("http://localhost:8000/api.php?search=true&temperature="+this.temperature+"&nomCont="+this.continent+"&budget="+this.budget+"&activite="+this.budget+"&distance="+this.distance+"&mois="+this.month)
+      axios.get("http://localhost:8000/api.php?search=true&temperature="+this.temperature+"&nomCont="+this.continent+"&budget="+this.budget+"&nomAct="+this.activites+"&distance="+this.distance+"&mois="+this.month)
       .then(response => {
         console.log(response.data);
         this.citiesFromDb=response.data.cities

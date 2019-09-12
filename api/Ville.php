@@ -32,14 +32,15 @@ class Ville
 	}
 
 	public function getByAttributes($pdo){
-		if (!isset($_GET['temperature']) && !isset($_GET['nomCont']) && !isset($_GET['distance']) && !isset($_GET['budget']) && !isset($_GET['activite']) && !isset($_GET['mois'])){
+		if (!isset($_GET['temperature']) && !isset($_GET['nomCont']) && !isset($_GET['distance']) && !isset($_GET['budget']) && !isset($_GET['nomAct']) && !isset($_GET['mois'])){
 			echo "Aucun champs rempli";
 			return false;
 		}
 
 		// set field list
-		$fields = array('tb' => array('temperature','budget','mois'), 'v' => array('ville','distance'), 'c' => array('nomCont'), 'a' => array('activite'));
+		$fields = array('tb' => array('temperature','budget','mois'), 'v' => array('ville','distance'), 'c' => array('nomCont'), 'a' => array('nomAct'));
 		$conditions = array();
+
 		// loop through define field
 		foreach($fields as $key => $field){
 			// if not nullable
@@ -54,7 +55,11 @@ class Ville
 						$conditions[] = "$key.tempMin <= $_GET[$subfield] AND $key.tempMax >= $_GET[$subfield]";
 					}
 					elseif ($subfield=="budget") {
-						$conditions[] = "$key.budgMax >= $_GET[$subfield]";
+						$conditions[] = "$key.budgMin < $_GET[$subfield]";
+					}
+					elseif ($subfield=="nomAct") {
+						var_dump($_GET['nomAct']);
+						var_dump("rest");
 					}
 					else{
 						$conditions[] = "$key.$subfield LIKE '%{$_GET[$subfield]}%'";
