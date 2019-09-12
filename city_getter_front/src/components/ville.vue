@@ -242,6 +242,7 @@ transition: all 0.2s;
     width: 100%;
     flex-wrap: wrap;
     display:flex;
+    justify-content: center;
   }
 
   .city{
