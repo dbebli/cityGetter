@@ -1,6 +1,6 @@
 <template>
     <div class="container" >
-      <h1 id="title">CityGetter <span>for the better</span></h1>
+        <img class="imgResult" src="../assets/logo_site.png" alt="logo" id="logoSite">
       <div id="userOptions">
         <div id="parameters">
           <div class="square">
@@ -26,7 +26,7 @@
 
           <div class="square" >
             <div class="openModal" v-on:click='showContinent = !showContinent'></div>
-            <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
+            <img class="imgResult customImg" src="../assets/world.svg" alt="world">
             <p>continent</p>
             <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showContinent" class="modal" >
@@ -42,7 +42,7 @@
 
           <div class="square" >
             <div class="openModal" v-on:click='showMonths = !showMonths'></div>
-            <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
+            <img class="imgResult customImg" src="../assets/calendar.svg" alt="calendar">
             <p>mois</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showMonths" class="modal" >
               <select name="" id="" v-model="month">
@@ -93,7 +93,7 @@
         </transition-group>
         <p v-show="!showResults" class="noRes">aucun resultat</p>
 
-     
+
       <p>These are the cities that we recommend.</p>
   </div>
 </template>
@@ -166,11 +166,22 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+.customImg{
+  width: 25px;
+}
+#logoSite{
+  width: 300px;
+  margin: auto;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  display: block;
+}
 .modal input{
   background-color: transparent;
   text-align: center;
   color: white;
 }
+
 body, body div#app{
   height: 100%;
 }
@@ -206,20 +217,8 @@ transition: all 0.2s;
 }
 
 
-#title{
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-}
-
  .holder {
-    background: #fff;
+    background: #ffffff75;
     width: 100%;
     flex-wrap: wrap;
     display:flex;
@@ -270,10 +269,10 @@ padding-top: 58px;
   }
   .square{
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     background: #337171;
-    margin: 6px;
+    margin: 20px 25px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -51,9 +51,10 @@ nav {
 nav a {
   padding: 10px;
   text-decoration: none;
-  background: #fff;
+  background: rgb(95, 177, 181);
   border-radius: 3px;
-  color: rgb(0, 110, 255);
+  text-transform: uppercase;
+  color: rgb(42, 63, 85);
   font-weight: bold;
   margin-right: 15px;
 }
