@@ -262,17 +262,17 @@ padding-top: 58px;
 }
   #parameters{
     display: flex;
-    width:800px;
+    width:640px;
     justify-content: center;
     flex-wrap: wrap;
     margin: 0 auto;
   }
   .square{
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     background: #337171;
-    margin: 20px 25px;
+    margin: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
