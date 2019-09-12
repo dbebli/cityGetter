@@ -7,24 +7,28 @@
             <div class="openModal" v-on:click='showDistance = !showDistance'></div>
             <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
             <p>distance</p>
+            <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showDistance" class="modal">
               <input type="number" placeholder="choisis ta distance" v-model="distance">
             </div>
+          </transition>
           </div>
-          
+
           <div class="square">
             <div class="openModal" v-on:click='showBudget = !showBudget'></div>
             <img class="imgResult" src="../assets/blanc/svg/sounds.svg" alt="plane">
-            <p>budget</p>
+            <p>budget</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showBudget" class="modal">
               <input type="text" placeholder="choisis ton budget maximum" v-model="budget">
             </div>
+          </transition>
           </div>
-          
+
           <div class="square" >
             <div class="openModal" v-on:click='showContinent = !showContinent'></div>
             <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
             <p>continent</p>
+            <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showContinent" class="modal" >
               <select name="" id="" v-model="continent">
                 <option value="">-- Choisir le continent --</option>
@@ -33,12 +37,13 @@
                 </option>
               </select>
             </div>
+          </transition>
           </div>
 
           <div class="square" >
             <div class="openModal" v-on:click='showMonths = !showMonths'></div>
             <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
-            <p>mois</p>
+            <p>mois</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showMonths" class="modal" >
               <select name="" id="" v-model="month">
                 <option value="">--Please choose a continent--</option>
@@ -47,33 +52,37 @@
                 </option>
               </select>
             </div>
+          </transition>
           </div>
-          
+
           <div class="square" >
             <div class="openModal" v-on:click='showActivite = !showActivite'></div>
             <img class="imgResult" src="../assets/blanc/svg/bike.svg" alt="plane">
-            <p>activité</p>
+            <p>activité</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showActivite" class="modal">
               <div v-for="(data, index) in activiteFromDb" class="activite">
                 <input type="checkbox" :id="data.nomAct" v-model="activites" :value="data.nomAct">
                 <label for="scales">{{data.nomAct}}</label>
               </div>
-              
+
             </div>
+          </transition>
           </div>
           <div class="square">
             <div class="openModal" v-on:click='showTemp = !showTemp'></div>
             <img class="imgResult" src="../assets/blanc/svg/brightness.svg" alt="plane">
-            <p>température</p>
+            <p>température</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showTemp" class="modal">
+              <p>{{ temperature }} °</p>
               <input type="range" v-model="temperature" min="0" max="50" step="1" @change="updateTextInput">
               <input type="text" id="textInput" value="">
             </div>
+          </transition>
           </div>
         </div>
-        <button v-on:click=getByAttributes>ok</button>
+        <button v-on:click=getByAttributes id="validateBtn">ok</button>
       </div>
-      
+
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
       <transition-group name="list" tag="div" class="holder" enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
         <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
@@ -120,7 +129,7 @@ export default {
     }
   },
   methods:{
-    getByAttributes: function (params) {      
+    getByAttributes: function (params) {
       axios.get("http://localhost:8000/api.php?search=true&temperature="+this.temperature+"&nomCont="+this.continent+"&budget="+this.budget+"&nomAct="+this.activites+"&distance="+this.distance+"&mois="+this.month)
       .then(response => {
         console.log(response.data);
@@ -128,7 +137,7 @@ export default {
       })
     },
     updateTextInput: function (e) {
-      document.getElementById('textInput').value=e.target.value; 
+      document.getElementById('textInput').value=e.target.value;
       this.temperature= e.target.value;
     }
   },
@@ -151,7 +160,40 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+.modal input{
+  background-color: transparent;
+  text-align: center;
+  color: white;
+}
+body, body div#app{
+  height: 100%;
+}
+.modal *{
+  text-align: center;
+  background-color: transparent;
+
+}
+#userOptions{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#validateBtn{
+width: 100px;
+height: 30px;
+background-color: #c8802a;
+border-radius: 15px;
+align-self: center;
+margin: 30px 0;
+font-weight: bold;
+color: white;
+transition: all 0.2s;
+}
+#validateBtn:hover{
+  background-color: #e3bb8a;
+}
 #bgk-pattern{
+height:100%;
     width: 100%;
     background-attachment: fixed;
     background-color: transparent;
@@ -206,9 +248,9 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    padding-top: 58px;
     background-size: 100% 100%;
-   text-align: center;
+text-align: center;
+padding-top: 58px;
   }
   .city p{
      color:#fff;
@@ -261,7 +303,7 @@ export default {
 
 }
 
-  .openModal{    
+  .openModal{
     cursor: pointer;
     position: absolute;
     width: 100%;
@@ -270,11 +312,14 @@ export default {
 
   .modal{
     position: absolute;
-    background: #000;
     padding: 12px;
     z-index: 1;
     color: #fff;
-    top:100px;
+    top:20px;
+    border-radius: 15px;
+    background-color: #40AFAA;
+    text-align: center;
+
   }
 
   ul {
