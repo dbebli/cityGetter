@@ -1,6 +1,6 @@
 <template>
     <div class="container" >
-      <h1 id="title">CityGetter <span>for the better</span></h1>
+        <img class="imgResult" src="../assets/logo_site.png" alt="logo" id="logoSite">
       <div id="userOptions">
         <div id="parameters">
           <div class="square">
@@ -26,7 +26,7 @@
 
           <div class="square" >
             <div class="openModal" v-on:click='showContinent = !showContinent'></div>
-            <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
+            <img class="imgResult customImg" src="../assets/world.svg" alt="world">
             <p>continent</p>
             <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showContinent" class="modal" >
@@ -42,7 +42,7 @@
 
           <div class="square" >
             <div class="openModal" v-on:click='showMonths = !showMonths'></div>
-            <img class="imgResult" src="../assets/blanc/svg/plane.svg" alt="plane">
+            <img class="imgResult customImg" src="../assets/calendar.svg" alt="calendar">
             <p>mois</p><transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
             <div v-show="showMonths" class="modal" >
               <select name="" id="" v-model="month">
@@ -79,21 +79,25 @@
           </transition>
           </div>
         </div>
-        <button v-on:click=getByAttributes id="validateBtn">ok</button>
+        <div class="buttons">
+          <button v-on:click=getByAttributes class="btn">ok</button>
+        <button v-on:click=reset class="btn">reset</button>
+        </div>
+        
       </div>
       <!-- :style="{ backgroundImage: `url(${require(`@/assets/${data.img}`)})`}" -->
-         <transition-group v-show="showResults" name="list" tag="div" class="holder" enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+         <transition-group v-show="showResults" name="list" tag="div" class="holder" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
           <div class="city" v-for="(data, index) in citiesFromDb" :key='index' >
             <div class="cityImg" :style="{ backgroundImage: `url(${require(`@/assets/${data.image}`)})`}">
-              <p>{{data.nomVille}}</p>
-              <p style="font-size:15px">{{data.budgMin}}€</p>
-              <p style="font-size:12px">{{data.tempMin}}°C - {{data.tempMax}}°c</p>
+              <p style="top:50px">{{data.nomVille}}</p>
+              <p style="font-size:15px;top:84px">{{data.budgMin}}€</p>
+              <p style="font-size:12px;top:110px">{{data.tempMin}}°C - {{data.tempMax}}°c</p>
             </div>
           </div>
         </transition-group>
         <p v-show="!showResults" class="noRes">aucun resultat</p>
 
-     
+
       <p>These are the cities that we recommend.</p>
   </div>
 </template>
@@ -131,16 +135,11 @@ export default {
     }
   },
   methods:{
-    getByAttributes: function (params) {
+    getByAttributes: function () {
       this.citiesFromDb=[]
       axios.get("http://localhost:8000/api.php?search=true&temperature="+this.temperature+"&nomCont="+this.continent+"&budget="+this.budget+"&nomAct="+this.activites+"&distance="+this.distance+"&mois="+this.month)
-<<<<<<< HEAD
       .then(response => {        
         if(response.data.cities.length==0){
-=======
-      .then(response => {
-        if(this.citiesFromDb.length==0){
->>>>>>> 8118c32fa2054101617d621d58349b1808ac6a51
           this.showResults=false
         }
         else{
@@ -151,6 +150,14 @@ export default {
     },
     updateTextInput: function (e) {
       this.temperature= e.target.value;
+    },
+    reset: function (e) {
+      this.temperature= "";
+      this.distance="";
+      this.activites=[];
+      this.budget=""
+      this.continent;
+      this.getByAttributes();
     }
   },
   mounted(){
@@ -171,11 +178,22 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+.customImg{
+  width: 25px;
+}
+#logoSite{
+  width: 300px;
+  margin: auto;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  display: block;
+}
 .modal input{
   background-color: transparent;
   text-align: center;
   color: white;
 }
+
 body, body div#app{
   height: 100%;
 }
@@ -195,13 +213,21 @@ body, body div#app{
   flex-direction: column;
   justify-content: center;
 }
-#validateBtn{
+.buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+
+}
+.btn{
 width: 100px;
 height: 30px;
 background-color: #c8802a;
 border-radius: 15px;
 align-self: center;
-margin: 30px 0;
+margin: 0px 10px;
+
 font-weight: bold;
 color: white;
 transition: all 0.2s;
@@ -211,23 +237,12 @@ transition: all 0.2s;
 }
 
 
-#title{
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-}
-
  .holder {
-    background: #fff;
+    background: #ffffff75;
     width: 100%;
     flex-wrap: wrap;
     display:flex;
+    justify-content: center;
   }
 
   .city{
@@ -249,26 +264,57 @@ transition: all 0.2s;
   }
 
   .cityImg{
-    transition: all .3s ease-in-out;
+    transition: all .4s ease-in-out;
     position: absolute;
     width: 100%;
     height: 100%;
     background-size: 100% 100%;
 text-align: center;
-padding-top: 58px;
   }
-  .city p{
-     color:#fff;
-     font-weight: 800;
-     text-transform: uppercase;
-     font-size: 20px;
+  .cityImg:after {
+    content: '\A';
+    position: absolute;
+    width: 100%; height:100%;
+    top:0; left:0;
+    background:rgba(0,0,0,0.6);
+    opacity: 1;
+<<<<<<< HEAD
+    transition: all .4s;
+    -webkit-transition: all .4s;
+=======
+    transition: all .6s;
+    -webkit-transition: all .6s;
+>>>>>>> 31a5a5f030696c84710798631b122159731f6522
+    z-index: 0;
+}
+.cityImg:hover:after,.cityImg:hover p {
+  opacity: 0;
+}
+  .cityImg p{
+     color: #fff;
+    z-index: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 800;
+    text-transform: uppercase;
+<<<<<<< HEAD
+    font-size: 16px;
+    width:100%;
+    transition: all .4s;
+    -webkit-transition: all .4s;
+=======
+    font-size: 20px;
+    transition: all .6s;
+    -webkit-transition: all .6s;
+>>>>>>> 31a5a5f030696c84710798631b122159731f6522
   }
 .activite{
   display: flex;
 }
   #parameters{
     display: flex;
-    width:800px;
+    width:640px;
     justify-content: center;
     flex-wrap: wrap;
     margin: 0 auto;
@@ -278,7 +324,7 @@ padding-top: 58px;
     width: 100px;
     height: 100px;
     background: #337171;
-    margin: 6px;
+    margin: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
