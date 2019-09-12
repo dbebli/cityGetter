@@ -13,6 +13,9 @@
 ## Membres de l'équipe
 
 Mounir & Asma : Création bdd et début de logique d'algo pour récupérer les paramètres
+
 Widad : Back & bdd
+
 Daniel : Front & Back, Structure, Liaison entre front et back
+
 Allan : Front
