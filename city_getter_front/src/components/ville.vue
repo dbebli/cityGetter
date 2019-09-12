@@ -17,7 +17,7 @@
             <img class="imgResult" src="../assets/blanc/svg/sounds.svg" alt="plane">
             <p>budget</p>
             <div v-show="showBudget" class="modal">
-              <input type="text" placeholder="choisis ton budget">
+              <input type="text" placeholder="choisis ton budget maximum">
             </div>
           </div>
           
@@ -27,7 +27,7 @@
             <p>continent</p>
             <div v-show="showContinent" class="modal" >
               <select name="" id="" v-model="continent">
-                <option value="">--Please choose a continent--</option>
+                <option value="">-- Choisir le continent --</option>
                 <option v-for="(data, index) in continentFromDb" >
                   {{data.nomCont}}
                 </option>

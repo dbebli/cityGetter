@@ -51,7 +51,10 @@ class Ville
 						$conditions[] = "$key.$subfield < $_GET[$subfield]";
 					}
 					elseif ($subfield=="temperature") {
-						$conditions[] = "$key.tempMin < $_GET[$subfield] AND $key.tempMax > $_GET[$subfield]";
+						$conditions[] = "$key.tempMin <= $_GET[$subfield] AND $key.tempMax >= $_GET[$subfield]";
+					}
+					elseif ($subfield=="budget") {
+						$conditions[] = "$key.budgMax >= $_GET[$subfield]";
 					}
 					else{
 						$conditions[] = "$key.$subfield LIKE '%{$_GET[$subfield]}%'";
