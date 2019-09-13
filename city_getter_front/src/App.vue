@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav>
-        <router-link to="/">cities</router-link>
+        <router-link to="/">Home</router-link>
         <router-link to="/admin">back office</router-link>
       </nav>
     <router-view/>
@@ -9,13 +9,9 @@
 </template>
 
 <script>
-import ville from './components/ville.vue'
 
 export default {
   name: 'app',
-  components: {
-    ville
-  }
 }
 </script>
 
@@ -45,7 +41,10 @@ body, html {
 }
 nav {
   padding: 20px 20px 20px 0;
-  margin: 0 auto;
+    margin: 0 auto;
+    top: 15px;
+    right: 5px;
+    position: absolute;
 }
 
 nav a {

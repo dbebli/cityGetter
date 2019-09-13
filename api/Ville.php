@@ -3,15 +3,15 @@
 
 class Ville
 {
-	private $pdo="";
+	private $pdo;
 
 	function __construct(\PDO $pdo){
-		$pdo = $pdo;
+		$this->pdo = $pdo;
 	}
 
 	
-	public function getCities($pdo){
-		$query = $pdo->query("SELECT distinct nomVille,image,tempMin,budgMin,tempMax
+	public function getCities(){
+		$query = $this->pdo->query("SELECT distinct nomVille,image,tempMin,budgMin,tempMax
 		FROM (select idVille, nomVille,image from `ville`)v
 		inner join
 		(select  idVille,tempMin,tempMax,budgMin,mois from `tempbudg`)tb
@@ -21,24 +21,24 @@ class Ville
 		return $res;
 	}
 	
-	public function getContinent($pdo){
-		$query = $pdo->query("SELECT * FROM `continent`");
+	public function getContinent(){
+		$query = $this->pdo->query("SELECT * FROM `continent`");
 		$res = $query->fetchAll();
 		return $res;
 	}
 
-	public function getActivite($pdo){
-		$query = $pdo->query("SELECT * FROM `activite`");
+	public function getActivite(){
+		$query = $this->pdo->query("SELECT * FROM `activite`");
 		$res = $query->fetchAll();
 		return $res;
 	}
-	public function getMonths($pdo){
-		$query = $pdo->query("SELECT distinct mois FROM `tempbudg`");
+	public function getMonths(){
+		$query = $this->pdo->query("SELECT distinct mois FROM `tempbudg`");
 		$res = $query->fetchAll();
 		return $res;
 	}
 
-	public function getByAttributes($pdo){
+	public function getByAttributes(){
 		if (!isset($_GET['temperature']) && !isset($_GET['nomCont']) && !isset($_GET['distance']) && !isset($_GET['budget']) && !isset($_GET['nomAct']) && !isset($_GET['mois'])){
 			echo "Aucun champs rempli";
 			return false;
@@ -95,14 +95,6 @@ class Ville
 			}
 		}
 
-
-		/*$sql = "select * from table where col = :value";
-		$query = $pdo->prepare($sql);
-		$query->execute([
-			'value' => 'tutu'
-		])*/;
-
-
 		// build querie
 		$querie="SELECT distinct nomVille,image,tempMin,budgMin,tempMax
 		FROM(Select idCont,idVille, nomVille,image,distance from ville)v
@@ -122,7 +114,7 @@ class Ville
 			// add where clause to the querie
 			$querie .= " WHERE " . implode (' AND ', $conditions);
 		}
-		$performQuerie =  $pdo->query($querie);
+		$performQuerie =  $this->pdo->query($querie);
 		//var_dump($conditions);
 		//echo $querie;
 

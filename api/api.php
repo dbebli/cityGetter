@@ -6,17 +6,15 @@ require "Ville.php";
 
 $ville = new Ville($pdo);
 
-
 if (isset($_GET['search'])) {
-    $result = $ville->getByAttributes($pdo);
+    $result = $ville->getByAttributes();
     echo json_encode(["cities"=>$result]);
 }
 else{
-    //at the beginning get all cities
-    $allCities =  $ville->getCities($pdo);
-    $allMonths=  $ville->getMonths($pdo);
-    $allActivite =  $ville->getActivite($pdo);
-    $allContinent =  $ville->getContinent($pdo);
+    $allCities =  $ville->getCities();
+    $allMonths=  $ville->getMonths();
+    $allActivite =  $ville->getActivite();
+    $allContinent =  $ville->getContinent();
     $tab=["cities"=>$allCities,"months"=>$allMonths,"activite"=>$allActivite,"continent"=>$allContinent];
   echo json_encode($tab);
 }
