@@ -1,10 +1,9 @@
 <?php
 header("Access-Control-Allow-Origin:*");
 header("Content-Type:application/json");
-require "inc/init.inc.php";
 require "Ville.php";
 
-$ville = new Ville($pdo);
+$ville = new Ville();
 
 if (isset($_GET['search'])) {
     $result = $ville->getByAttributes();
