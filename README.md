@@ -4,8 +4,7 @@
 
 1. Importer la base voyage.sql dans une base de données du nom de 'voyage'
 2. Se placer à la racine du dossier pour lancer l'api : ```php -S localhost:8000 -t api/```
-3. Installer vue.js : ```npm install -g @vue/cli```
-4. Se placer dans _cityGetter/city_getter_front/_ et exécuter ces commandes :
+3. Se placer dans _cityGetter/city_getter_front/_ et exécuter ces commandes :
         ```npm install```
         ```npm run serve```
 
